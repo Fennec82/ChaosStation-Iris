@@ -172,7 +172,7 @@
 /area/station/hallway/secondary/entry)
 "fo" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "fy" = (
 /obj/docking_port/stationary/escape_pod,
@@ -395,10 +395,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"mA" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "mO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -555,6 +551,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "to" = (
@@ -953,11 +950,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"Fr" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "FK" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral,
@@ -1014,12 +1006,12 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "IR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "JZ" = (
@@ -1117,6 +1109,7 @@
 /area/station/hallway/secondary/entry)
 "QV" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -1280,11 +1273,6 @@
 "Ym" = (
 /turf/open/space/basic,
 /area/space)
-"Yy" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "YH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -1385,14 +1373,14 @@ Ym
 Ym
 Ym
 Ym
-mA
-mA
-mA
+Yd
+Yd
+Yd
 Ym
-mA
+Yd
 Ym
 Ym
-mA
+Yd
 wN
 Qx
 wN
@@ -1405,7 +1393,7 @@ wN
 Qx
 wN
 Ym
-mA
+Yd
 Ym
 Ym
 Ym
@@ -1418,28 +1406,28 @@ Ym
 Ym
 Ym
 Ym
-mA
-mA
-mA
-mA
-mA
-mA
+Yd
+Yd
+Yd
+Yd
+Yd
+Yd
 wN
 ct
 wN
-mA
+Yd
 Ym
 Ym
 Ym
-mA
+Yd
 wN
 AQ
 wN
-mA
-mA
-mA
-mA
-mA
+Yd
+Yd
+Yd
+Yd
+Yd
 wN
 "}
 (5,1,1) = {"
@@ -1451,7 +1439,7 @@ Ym
 Ym
 fo
 Ym
-mA
+Yd
 Ym
 Ym
 Ym
@@ -1482,7 +1470,7 @@ Ym
 Ym
 fo
 Ym
-mA
+Yd
 Ym
 Ym
 Ym
@@ -1513,7 +1501,7 @@ Ym
 Ym
 fo
 Ym
-mA
+Yd
 Ym
 Ym
 Ym
@@ -1544,7 +1532,7 @@ Ym
 Ym
 fo
 Ym
-mA
+Yd
 Ym
 Ym
 Ym
@@ -1574,8 +1562,8 @@ Ym
 Ym
 Ym
 fo
-mA
-mA
+Yd
+Yd
 Ym
 Ym
 Ym
@@ -1606,7 +1594,7 @@ Ym
 Ym
 fo
 Ym
-mA
+Yd
 Ym
 Ym
 Ym
@@ -1637,7 +1625,7 @@ Ym
 Ym
 fo
 Ym
-mA
+Yd
 Ym
 Ym
 Ym
@@ -1668,7 +1656,7 @@ Ym
 Ym
 fo
 Ym
-mA
+Yd
 Ym
 Ym
 Ym
@@ -1699,7 +1687,7 @@ Ym
 Ym
 fo
 Ym
-mA
+Yd
 Ym
 Ym
 Ym
@@ -1728,28 +1716,28 @@ Ym
 Ym
 Ym
 Ym
-mA
-mA
-mA
-mA
-mA
-mA
+Yd
+Yd
+Yd
+Yd
+Yd
+Yd
 wN
 DT
 wN
-mA
+Yd
 Ym
 Ym
 Ym
-mA
+Yd
 wN
 DT
 wN
-mA
-mA
-mA
-mA
-mA
+Yd
+Yd
+Yd
+Yd
+Yd
 wN
 "}
 (15,1,1) = {"
@@ -1757,14 +1745,14 @@ Ym
 Ym
 Ym
 Ym
-mA
-mA
-mA
+Yd
+Yd
+Yd
 Ym
-mA
+Yd
 Ym
 Ym
-mA
+Yd
 wN
 lm
 wN
@@ -1777,7 +1765,7 @@ wN
 lm
 wN
 Ym
-mA
+Yd
 Ym
 Ym
 Ym
@@ -1858,17 +1846,17 @@ uj
 vz
 vz
 vz
-ZP
-VH
 QV
+VH
+vz
 vz
 ZP
 nU
 ZP
 vz
 vz
+VH
 CP
-vz
 ZP
 vz
 ZP
@@ -1955,10 +1943,10 @@ Yd
 CM
 Ym
 Ym
-Yy
+aF
 bU
 FK
-Fr
+ri
 Ym
 Ym
 cZ
@@ -1986,10 +1974,10 @@ Ym
 Ym
 Ym
 Ym
-Yy
+aF
 dC
 fY
-Fr
+ri
 Yd
 Yd
 kT
@@ -2234,10 +2222,10 @@ Ym
 Ym
 Ym
 Ym
-Yy
+aF
 iR
 mT
-Fr
+ri
 Yd
 Yd
 kT
@@ -2265,10 +2253,10 @@ Yd
 qQ
 Ym
 Ym
-Yy
+aF
 bU
 FK
-Fr
+ri
 Ym
 Ym
 cZ
