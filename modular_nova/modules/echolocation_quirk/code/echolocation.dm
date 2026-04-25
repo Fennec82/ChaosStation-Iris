@@ -16,6 +16,11 @@
 	/// The action we add with this quirk in add(), used for easy deletion later
 	var/datum/action/cooldown/spell/added_action
 
+/datum/quirk/echolocation/is_species_appropriate(datum/species/mob_species)
+	if(ispath(mob_species, /datum/species/dullahan))
+		return FALSE
+	return ..()
+
 /datum/quirk/echolocation/add(client/client_source)
 	// echolocation component handles blinding us already so we don't need to worry about that
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -46,9 +51,9 @@
 	//IRIS EDIT ADDITION BEGIN - SLOWER_ECHOLOCATION_PREF
 	var/client_echo_render_mult = client_source?.prefs.read_preference(/datum/preference/numeric/echolocation_mult)
 	if(client_echo_render_mult)
-		esp.fade_in_time *= client_echo_render_mult
+		//esp.fade_in_time *= client_echo_render_mult
 		esp.image_expiry_time *= client_echo_render_mult
-		esp.fade_out_time *= client_echo_render_mult
+		//esp.fade_out_time *= client_echo_render_mult
 	//IRIS EDIT ADDITION END
 
 	// HEY! we probably need something to make sure they don't set a color that's too dark or their UI could be totally invisible.

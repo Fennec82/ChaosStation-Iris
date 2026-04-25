@@ -26,7 +26,7 @@
 	max_integrity = 50
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
-	grind_results = list(/datum/reagent/cellulose = 3)
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	color = COLOR_WHITE
 	item_flags = SKIP_FANTASY_ON_SPAWN
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
@@ -95,6 +95,9 @@
 	clear_paper()
 	LAZYREMOVE(SSpersistence.queued_message_bottles, src)
 	return ..()
+
+/obj/item/paper/grind_results()
+	return list(/datum/reagent/cellulose = 3)
 
 /obj/item/paper/custom_fire_overlay()
 	if (!custom_fire_overlay)
@@ -196,8 +199,13 @@
  * * color - The font color to use.
  * * bold - Whether this text should be rendered completely bold.
  * * advanced_html - Boolean that is true when the writer has R_FUN permission, which sanitizes less HTML (such as images) from the new paper_input
+ * * user - Optional mob who is writing this text, used for [sign] replacement
  */
-/obj/item/paper/proc/add_raw_text(text, font, color, bold, advanced_html)
+/obj/item/paper/proc/add_raw_text(text, font, color, bold, advanced_html, mob/user)
+	// Process [sign] replacement if user is provided
+	if(user && findtext(text, "\[sign\]"))
+		text = replacetext(text, "\[sign\]", "<font face=\"[SIGNATURE_FONT]\"><i>[user.real_name]</i></font>")
+
 	var/new_input_datum = new /datum/paper_input(
 		text,
 		font,
@@ -388,12 +396,12 @@
 		return UI_CLOSE
 	if(!user.can_read(src))
 		return UI_CLOSE
-	if(in_contents_of(/obj/machinery/door/airlock) || in_contents_of(/obj/item/clipboard) || in_contents_of(/obj/item/folder))
+	if(ismovable(loc) && loc.IsContainedAtomAccessible(src, user))
 		return UI_INTERACTIVE
 	return ..()
 
 /obj/item/paper/can_interact(mob/user)
-	if(in_contents_of(/obj/machinery/door/airlock))
+	if(ismovable(loc) && loc.IsContainedAtomAccessible(src, user))
 		return TRUE
 	return ..()
 
@@ -535,6 +543,7 @@
 	static_data["default_pen_font"] = PEN_FONT
 	static_data["default_pen_color"] = COLOR_BLACK
 	static_data["signature_font"] = FOUNTAIN_PEN_FONT
+	static_data["station_name"] = station_name()
 
 	return static_data;
 
@@ -682,7 +691,7 @@
 
 			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 
-			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], check_rights_for(user?.client, R_FUN))
+			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], check_rights_for(user?.client, R_FUN), user)
 
 			log_paper("[key_name(user)] wrote to [name]: \"[paper_input]\"")
 			to_chat(user, "You have added to your paper masterpiece!");

@@ -413,10 +413,10 @@
 /obj/item/clothing/suit/space/hev_suit/proc/powerarmor()
 	set_armor(armor_powered)
 	current_helmet.set_armor(armor_powered)
-	user_old_bruteloss = current_user.getBruteLoss()
-	user_old_fireloss = current_user.getFireLoss()
-	user_old_toxloss = current_user.getToxLoss()
-	user_old_oxyloss = current_user.getOxyLoss()
+	user_old_bruteloss = current_user.get_brute_loss()
+	user_old_fireloss = current_user.get_fire_loss()
+	user_old_toxloss = current_user.get_tox_loss()
+	user_old_oxyloss = current_user.get_oxy_loss()
 	RegisterSignal(current_user, COMSIG_MOB_RUN_ARMOR, PROC_REF(process_hit))
 	playsound(src, armor_sound, 50)
 	send_message("...CALIBRATED", HEV_COLOR_GREEN)
@@ -425,16 +425,16 @@
 
 /obj/item/clothing/suit/space/hev_suit/proc/process_hit()
 	SIGNAL_HANDLER
-	var/new_bruteloss = current_user.getBruteLoss()
-	var/new_fireloss = current_user.getFireLoss()
-	var/new_toxloss = current_user.getToxLoss()
-	var/new_oxyloss = current_user.getOxyLoss()
+	var/new_bruteloss = current_user.get_brute_loss()
+	var/new_fireloss = current_user.get_fire_loss()
+	var/new_toxloss = current_user.get_tox_loss()
+	var/new_oxyloss = current_user.get_oxy_loss()
 	var/use_power_this_hit = FALSE
-	if(current_user.getBruteLoss() > (new_bruteloss + HEV_DAMAGE_POWER_USE_THRESHOLD))
+	if(current_user.get_brute_loss() > (new_bruteloss + HEV_DAMAGE_POWER_USE_THRESHOLD))
 		use_power_this_hit = TRUE
-	if(current_user.getFireLoss() > (new_fireloss + HEV_DAMAGE_POWER_USE_THRESHOLD))
+	if(current_user.get_fire_loss() > (new_fireloss + HEV_DAMAGE_POWER_USE_THRESHOLD))
 		use_power_this_hit = TRUE
-	if(current_user.getToxLoss() > (new_toxloss + HEV_DAMAGE_POWER_USE_THRESHOLD))
+	if(current_user.get_tox_loss() > (new_toxloss + HEV_DAMAGE_POWER_USE_THRESHOLD))
 		use_power_this_hit = TRUE
 	user_old_bruteloss = new_bruteloss
 	user_old_fireloss = new_fireloss
@@ -539,10 +539,10 @@
 
 	handle_tank()
 
-	if(current_user.getToxLoss() > 30 && !toxins_alarm)
+	if(current_user.get_tox_loss() > 30 && !toxins_alarm)
 		send_hev_sound(blood_toxins_sound)
 		toxins_alarm = TRUE
-	else if(toxins_alarm && current_user.getToxLoss() <= 30)
+	else if(toxins_alarm && current_user.get_tox_loss() <= 30)
 		toxins_alarm = FALSE
 
 	if(current_user.all_wounds)
@@ -553,20 +553,20 @@
 	if(world.time <= healing_current_cooldown)
 		return
 
-	var/new_bruteloss = current_user.getBruteLoss()
-	var/new_fireloss = current_user.getFireLoss()
-	var/new_toxloss = current_user.getToxLoss()
-	var/new_oxyloss = current_user.getOxyLoss()
-	var/new_stamloss = current_user.getStaminaLoss()
+	var/new_bruteloss = current_user.get_brute_loss()
+	var/new_fireloss = current_user.get_fire_loss()
+	var/new_toxloss = current_user.get_tox_loss()
+	var/new_oxyloss = current_user.get_oxy_loss()
+	var/new_stamloss = current_user.get_stamina_loss()
 
 	if(new_stamloss)
 		if(use_hev_power(HEV_POWERUSE_HEAL))
-			current_user.adjustStaminaLoss(-heal_amount)
+			current_user.adjust_stamina_loss(-heal_amount)
 			healing_current_cooldown = world.time + health_static_cooldown * 2
 
 	if(new_oxyloss)
 		if(use_hev_power(HEV_POWERUSE_HEAL))
-			current_user.adjustOxyLoss(-heal_amount)
+			current_user.adjust_oxy_loss(-heal_amount)
 			healing_current_cooldown = world.time + health_static_cooldown
 			send_message("ADRENALINE ADMINISTERED", HEV_COLOR_BLUE)
 			send_hev_sound(morphine_sound)
@@ -574,7 +574,7 @@
 
 	if(new_bruteloss)
 		if(use_hev_power(HEV_POWERUSE_HEAL))
-			current_user.adjustBruteLoss(-heal_amount)
+			current_user.adjust_brute_loss(-heal_amount)
 			healing_current_cooldown = world.time + health_static_cooldown
 			send_message("BRUTE MEDICAL ATTENTION ADMINISTERED", HEV_COLOR_BLUE)
 			send_hev_sound(wound_sound)
@@ -582,7 +582,7 @@
 
 	if(new_fireloss)
 		if(use_hev_power(HEV_POWERUSE_HEAL))
-			current_user.adjustFireLoss(-heal_amount)
+			current_user.adjust_fire_loss(-heal_amount)
 			healing_current_cooldown = world.time + health_static_cooldown
 			send_message("BURN MEDICAL ATTENTION ADMINISTERED", HEV_COLOR_BLUE)
 			send_hev_sound(wound_sound)
@@ -590,7 +590,7 @@
 
 	if(new_toxloss)
 		if(use_hev_power(HEV_POWERUSE_HEAL))
-			current_user.adjustToxLoss(-heal_amount)
+			current_user.adjust_tox_loss(-heal_amount)
 			healing_current_cooldown = world.time + health_static_cooldown
 			send_message("TOXIN MEDICAL ATTENTION ADMINISTERED", HEV_COLOR_BLUE)
 			send_hev_sound(antitoxin_sound)
@@ -700,6 +700,25 @@
 	mask_type = /obj/item/clothing/mask/gas/alt
 	storage_type = /obj/item/tank/internals/oxygen
 
+/datum/atom_skin/pcv
+	abstract_type = /datum/atom_skin/pcv
+	change_base_icon_state = TRUE
+
+/datum/atom_skin/pcv/basic
+	preview_name = "Basic"
+	new_icon_state = "hecu_helm"
+
+/datum/atom_skin/pcv/corpsman
+	preview_name = "Corpsman"
+	new_icon_state = "hecu_helm_medic"
+
+/datum/atom_skin/pcv/basicblack
+	preview_name = "Basic Black"
+	new_icon_state = "hecu_helm_black"
+
+/datum/atom_skin/pcv/corpsmanblack
+	preview_name = "Corpsman Black"
+	new_icon_state = "hecu_helm_medic_black"
 
 /obj/item/clothing/head/helmet/space/hev_suit/pcv
 	name = "powered combat helmet"
@@ -720,25 +739,9 @@
 	visor_flags_inv = null
 	visor_flags = null
 	slowdown = 0
-	uses_advanced_reskins = TRUE
-	unique_reskin = list(
-		"Basic" = list(
-			RESKIN_ICON_STATE = "hecu_helm",
-			RESKIN_WORN_ICON_STATE = "hecu_helm"
-		),
-		"Corpsman" = list(
-			RESKIN_ICON_STATE = "hecu_helm_medic",
-			RESKIN_WORN_ICON_STATE = "hecu_helm_medic"
-		),
-		"Basic Black" = list(
-			RESKIN_ICON_STATE = "hecu_helm_black",
-			RESKIN_WORN_ICON_STATE = "hecu_helm_black"
-		),
-		"Corpsman Black" = list(
-			RESKIN_ICON_STATE = "hecu_helm_medic_black",
-			RESKIN_WORN_ICON_STATE = "hecu_helm_medic_black"
-		),
-	)
+
+/obj/item/clothing/head/helmet/space/hev_suit/pcv/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/pcv)
 
 /datum/armor/hev_suit_pcv
 	melee = 30
@@ -764,6 +767,26 @@
 	wound = 50
 	consume = 40
 
+/datum/atom_skin/hecu_vest_pcv
+	abstract_type = /datum/atom_skin/hecu_vest_pcv
+	change_base_icon_state = TRUE
+
+/datum/atom_skin/hecu_vest_pcv/basic
+	preview_name = "Basic"
+	new_icon_state = "hecu_vest"
+
+/datum/atom_skin/hecu_vest_pcv/corpsman
+	preview_name = "Corpsman"
+	new_icon_state = "hecu_vest_medic"
+
+/datum/atom_skin/hecu_vest_pcv/black
+	preview_name = "Basic Black"
+	new_icon_state = "hecu_vest_black"
+
+/datum/atom_skin/hecu_vest_pcv/corpsman_black
+	preview_name = "Corpsman Black"
+	new_icon_state = "hecu_vest_medic_black"
+
 /obj/item/clothing/suit/space/hev_suit/pcv
 	name = "powered combat vest"
 	desc = "An electrically charged piece of body armor, the power stiffens the suit's fibers to provide a layer of resilient armor in response to trauma received from kinetic force.  It's fitted with a geiger counter, tactical radio, a heads up display and a combat cocktail injector that allows the user to function normally even after serious injury. The concentration of mass in the lower rear side from the onboard computer makes your ass feel heavy."
@@ -779,25 +802,9 @@
 	resistance_flags = FIRE_PROOF|ACID_PROOF|FREEZE_PROOF
 	clothing_flags = SNUG_FIT
 	show_hud = FALSE
-	uses_advanced_reskins = TRUE
-	unique_reskin = list(
-		"Basic" = list(
-			RESKIN_ICON_STATE = "hecu_vest",
-			RESKIN_WORN_ICON_STATE = "hecu_vest"
-		),
-		"Corpsman" = list(
-			RESKIN_ICON_STATE = "hecu_vest_medic",
-			RESKIN_WORN_ICON_STATE = "hecu_vest_medic"
-		),
-		"Basic Black" = list(
-			RESKIN_ICON_STATE = "hecu_vest_black",
-			RESKIN_WORN_ICON_STATE = "hecu_vest_black"
-		),
-		"Corpsman Black" = list(
-			RESKIN_ICON_STATE = "hecu_vest_medic_black",
-			RESKIN_WORN_ICON_STATE = "hecu_vest_medic_black"
-		),
-	)
+
+/obj/item/clothing/suit/space/hev_suit/pcv/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/hecu_vest_pcv)
 
 	activation_song = null // removal of song only standard suit will have the song
 
@@ -844,12 +851,6 @@
 	rads_static_cooldown = PCV_COOLDOWN_RADS
 	acid_static_cooldown = PCV_COOLDOWN_ACID
 	suit_name = "PCV MARK II"
-
-/obj/item/clothing/suit/space/hev_suit/pcv/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	if(!current_skin)
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
-		return CONTEXTUAL_SCREENTIP_SET
 
 #undef HEV_COLOR_GREEN
 #undef HEV_COLOR_RED

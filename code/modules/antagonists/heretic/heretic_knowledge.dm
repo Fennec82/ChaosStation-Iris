@@ -231,7 +231,7 @@
 	return ..()
 
 /datum/heretic_knowledge/limited_amount/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	if(our_heretic && our_heretic.unlimited_blades)
 		if(length(result_atoms & typesof(/obj/item/melee/sickly_blade)))
 			return TRUE
@@ -653,8 +653,8 @@
 
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
-	heretic_datum.rust_strength = 4 // Ascended heretics can rust whatever they want (below RUST_RESISTANCE_ABSOLUTE)
-	ADD_TRAIT(user, TRAIT_DESENSITIZED, type)
+	heretic_datum.rust_strength = RUST_RESISTANCE_ORGANIC // Ascended heretics can rust whatever they want (below RUST_RESISTANCE_ABSOLUTE)
+	user.apply_status_effect(/datum/status_effect/desensitized, type, DESENSITIZED_THRESHOLD * 0.4)
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

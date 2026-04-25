@@ -45,6 +45,9 @@
 /// Gives us medium night vision, same as thermal but without seeing through walls
 #define TRAIT_MEDIUM_NIGHT_VISION "medium_night_vision"
 
+//// The trait for undersized quirk
+#define TRAIT_UNDERSIZED "undersized"
+
 //Trait sources
 
 //Special trait source for illiteracy granted by farsightedness, part of https://github.com/lizardqueenlexi/orbstation/pull/254
@@ -52,12 +55,12 @@
 
 //Items
 
-//Helps users examine items with custom text, part of https://github.com/DopplerShift13/DopplerShift/pull/345
-#define TRAIT_WORN_EXAMINE "worn_examine"
-
 // /obj/item
 /// Applied to a satchel that is being worn on the belt.
 #define TRAIT_BELT_SATCHEL "belt_satchel"
 
 /// Allows the user to instantly reload.
 #define TRAIT_INSTANT_RELOAD "instant_reload"
+
+//// The trait for Holosynths
+#define TRAIT_HOLOSYNTH "holosynthetic"

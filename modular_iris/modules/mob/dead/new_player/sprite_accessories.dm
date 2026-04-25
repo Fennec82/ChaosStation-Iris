@@ -158,6 +158,10 @@
 	name = "Fluffy Long Ponytail"
 	icon_state = "hair_fluffypony"
 
+/datum/sprite_accessory/hair/iris/mia // from Citadel
+	name = "Mia"
+	icon_state = "hair_mia"
+
 // TAILS
 
 /datum/sprite_accessory/tails/mammal/iris
@@ -373,6 +377,7 @@
 	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 	factual = FALSE
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/wings/mammal/iris
 	icon = 'modular_iris/master_files/icons/mob/sprite_accessory/wings.dmi'
@@ -572,6 +577,8 @@
 	name = SPRITE_ACCESSORY_NONE
 	icon_state = "None"
 	recommended_species = null
+	factual = FALSE
+	natural_spawn = FALSE
 
 /datum/sprite_accessory/antenna/iris
 	icon = 'modular_iris/master_files/icons/mob/sprite_accessory/ipc_antennas.dmi'

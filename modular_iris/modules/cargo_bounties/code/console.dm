@@ -45,14 +45,13 @@
 				var/datum/bounty/pill/pill_bounty = new_cargo_bounty
 				pill_bounty.required_ammount *= 3 // ammount
 
-			new_cargo_bounty.reward *= 3
+			new_cargo_bounty.get_bounty_reward() || 3
 			GLOB.cargo_bounties += new_cargo_bounty
 
 		var/list/high_priority_bounties = list()
 		for(var/index in 1 to 2)
 			var/datum/bounty/cargo_bounty = pick_n_take(GLOB.cargo_bounties)
-			cargo_bounty.high_priority = TRUE
-			cargo_bounty.reward *= 1.5
+			cargo_bounty.get_bounty_reward() || 1.5
 			high_priority_bounties += cargo_bounty
 
 		GLOB.cargo_bounties |= high_priority_bounties
@@ -71,11 +70,9 @@
 		data["bountydata"] += list(list(
 			"name" = B.name,
 			"description" = B.description,
-			"reward_string" = "[B.reward] Credits",
+			"reward_string" = "[B.get_bounty_reward()] Credits",
 			"completion_string" = B.get_completion_string(),
-			"claimed" = B.claimed,
 			"can_claim" = B.can_claim(),
-			"priority" = B.high_priority,
 			"bounty_ref" = REF(B),
 		))
 
@@ -90,15 +87,29 @@
 		if("ClaimBounty")
 			var/datum/bounty/cashmoney = locate(params["bounty"]) in GLOB.cargo_bounties
 			if(cashmoney)
-				cashmoney.claim()
+				cashmoney.can_claim()
 
 		if("Print")
 			if(printer_ready < world.time)
 				printer_ready = world.time + PRINTER_TIMEOUT
 				new /obj/item/paper/bounty_printout(get_turf(src), GLOB.cargo_bounties)
 
-/datum/export/bounty/applies_to(obj/exported_item, apply_elastic = TRUE, export_market)
-	if(export_market != sales_market)
+/datum/export/bounty
+	cost = 1
+	unit_name = "fluff bounty"
+	export_types = list(/obj/item/toy/plush/iris)
+
+/datum/export/bounty/applies_to(obj/exported_item, apply_elastic = TRUE, list/export_markets)
+	if(exported_item.flags_1 & HOLOGRAM_1)
+		return FALSE
+
+	var/valid_market = FALSE
+	for(var/found_market in export_markets)
+		if(found_market == sales_market)
+			valid_market = TRUE
+			break
+
+	if(!valid_market)
 		return FALSE
 
 	for(var/datum/bounty/cargo_bounty as anything in GLOB.cargo_bounties)

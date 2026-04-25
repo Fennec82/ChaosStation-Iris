@@ -38,6 +38,7 @@
 		add_verb(cyborg, /mob/living/silicon/robot/proc/robot_lay_down)
 		add_verb(cyborg, /mob/living/silicon/robot/proc/rest_style)
 	else
+		cyborg.robot_rest_style = ROBOT_REST_NORMAL
 		cyborg.set_base_pixel_x(0)
 		remove_verb(cyborg, /mob/living/silicon/robot/proc/robot_lay_down)
 		remove_verb(cyborg, /mob/living/silicon/robot/proc/rest_style)
@@ -313,7 +314,7 @@
 /obj/item/robot_model/cargo
 	name = "Cargo"
 	basic_modules = list(
-		/obj/item/stamp,
+		/obj/item/stamp/granted,
 		/obj/item/stamp/denied,
 		/obj/item/pen/cyborg,
 		/obj/item/clipboard/cyborg,
@@ -325,7 +326,8 @@
 		/obj/item/borg/hydraulic_clamp/mail,
 		/obj/item/hand_labeler/cyborg,
 		/obj/item/dest_tagger,
-		/obj/item/crowbar/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/weldingtool/largetank/cyborg, // a basic toolset that everyone has. Very helpful in cargo.
 		/obj/item/extinguisher,
 		/obj/item/universal_scanner,
 	)
@@ -366,7 +368,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/electric,
-		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/multitool/cyborg,
 		/obj/item/crowbar/cyborg/power,
 		/obj/item/screwdriver/cyborg/power,
 		/obj/item/construction/rcd/borg/syndicate,
@@ -444,6 +446,27 @@
 	syndicatejack.scrambledcodes = FALSE // Friends with the AI again
 	return ..()
 
+//marauder subtype
+/obj/item/robot_model/syndicatejack/marauder
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/borg/stun,
+		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/melee/energy/sword/cyborg,
+		/obj/item/gun/energy/printer,
+		/obj/item/card/emag,
+		/obj/item/borg_shapeshifter,
+		/obj/item/borg/cyborg_omnitool/medical,
+		/obj/item/borg/cyborg_omnitool/medical,
+		/obj/item/reagent_containers/borghypo/syndicate,
+		/obj/item/shockpaddles/syndicate/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/construction/rcd/borg/syndicate,
+		/obj/item/extinguisher/mini,
+		)
+
 //NINJA
 /obj/item/robot_model/ninja
 	name = "Spider Clan Assault"
@@ -483,11 +506,11 @@
 /obj/item/robot_model/ninja/rebuild_modules()
 	. = ..()
 	var/mob/living/silicon/robot/ninja = loc
-	ninja.faction  -= "silicon" //ai turrets hostile against assault and medical
+	ninja.remove_faction(FACTION_SILICON) //ai turrets hostile against assault and medical
 
 /obj/item/robot_model/ninja/remove_module(obj/item/removed_module)
 	var/mob/living/silicon/robot/ninja = loc
-	ninja.faction += "silicon"
+	ninja.add_faction(FACTION_SILICON)
 	return ..()
 
 /obj/item/robot_model/ninja/ninja_medical

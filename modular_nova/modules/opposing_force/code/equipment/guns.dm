@@ -124,6 +124,15 @@
 	new /obj/item/gun/energy/laser/carbine(src)
 	new /obj/item/storage/box/syndie_kit/recharger(src)
 
+/datum/opposing_force_equipment/ranged/carbines120
+	name = "Cybersun S-120"
+	description = "A laser gun primarily used by syndicate security guards. It fires a rapid spray of low-power plasma beams."
+	item_type = /obj/item/storage/toolbox/guncase/nova/opfor/carbines120
+
+/obj/item/storage/toolbox/guncase/nova/opfor/carbines120/PopulateContents()
+	new /obj/item/gun/energy/laser/cybersun/unrestricted(src)
+	new /obj/item/storage/box/syndie_kit/recharger(src)
+
 /datum/opposing_force_equipment/ranged/laser
 	name = "laser gun"
 	description = "A basic energy-based laser gun that fires concentrated beams of light which pass through glass and thin metal."
@@ -252,6 +261,33 @@
 	new /obj/item/gun/ballistic/revolver/ocelot(src)
 	new /obj/item/ammo_box/speedloader/c357/peacemaker(src)
 	new /obj/item/ammo_box/speedloader/c357/peacemaker(src)
+
+/datum/opposing_force_equipment/ranged_stealth/ansem
+	name = "Ansem Pistol Case"
+	description = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+			with suppressors. Comes with three spare magazines."
+	item_type = /obj/item/storage/toolbox/guncase/nova/pistol/opfor/ansem
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/unrestricted
+	pin = /obj/item/firing_pin
+
+/obj/item/storage/toolbox/guncase/nova/pistol/opfor/ansem/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol/clandestine/unrestricted(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+
+/datum/opposing_force_equipment/ranged/rpg
+	name = "Dardo-RE Rocket Propelled Grenade Launcher"
+	description = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
+			Guaranteed to take your target out with a bang, or your money back! Comes with a bouquet of additional rockets!"
+	item_type = /obj/item/storage/toolbox/guncase/nova/opfor/rpg
+
+/obj/item/gun/ballistic/rocketlauncher/unrestricted
+	pin = /obj/item/firing_pin
+
+/obj/item/storage/toolbox/guncase/nova/opfor/rpg/PopulateContents()
+	new /obj/item/gun/ballistic/rocketlauncher/unrestricted(src)
+	new /obj/item/ammo_box/rocket(src)
 
 //foamforce
 /datum/opposing_force_equipment/ranged_stealth/foamforce_smg
